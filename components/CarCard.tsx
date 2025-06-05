@@ -1,8 +1,8 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { CarProps } from "@/types";
-import { calculateRentalRate } from "@/utils";
+import { calculateRentalRate, generateCarImageUrl } from "@/utils";
 import { CustomButton, CardDetails } from "./";
 
 interface CarCardProps {
@@ -13,6 +13,23 @@ const CarCard = ({ car }: CarCardProps) => {
     const {city_mpg, year, make, model, drive, transmission} = car;
     const [isOpen, setIsOpen] = useState(false);
     const carRent = calculateRentalRate(city_mpg, year);
+    // const [imageUrl, setImageUrl] = useState<string | null>(null);
+  
+//     useEffect(() => {
+//       fetchCarImageUrl(car).then((url) => {
+//         console.log('Fetched image URL:', url);
+//         if (url) {
+//           console.log('Setting image URL for', car.make, car.model, ':', url);
+//           setImageUrl(url);
+//         } else {
+//           console.log('No image URL returned for', car.make, car.model);
+//         }
+//       }).catch(error => {
+//         console.error('Error fetching car image:', error);
+//       });
+//     }, [car]);
+
+// console.log(imageUrl);
 
     return (
     <div className="car-card group">
@@ -32,7 +49,20 @@ const CarCard = ({ car }: CarCardProps) => {
         </p>
 
         <div className="relative w-full h-40 my-3 object-contain">
-            <Image src="/hero.png" alt="car model" fill priority className="object-contain" />
+            {/* {!imageUrl && <div className="absolute inset-0 flex items-center justify-center bg-gray-100">Loading...</div>}
+            {imageUrl && (
+                <Image 
+                    src={imageUrl}  
+                    alt={`${car.make} ${car.model}`}
+                    fill 
+                    priority 
+                    className="object-contain"
+                    onError={(e) => {
+                        console.error('Error loading image:', imageUrl);
+                    }}
+                />
+            )} */}
+            <Image src={generateCarImageUrl(car)} alt='car model' fill priority className='object-contain' />
         </div>
 
         <div className="relative flex w-full mt-2">
