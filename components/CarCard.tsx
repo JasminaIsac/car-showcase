@@ -13,6 +13,7 @@ const CarCard = ({ car }: CarCardProps) => {
     const {city_mpg, year, make, model, drive, transmission} = car;
     const [isOpen, setIsOpen] = useState(false);
     const carRent = calculateRentalRate(city_mpg, year);
+
     // const [imageUrl, setImageUrl] = useState<string | null>(null);
   
 //     useEffect(() => {

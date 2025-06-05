@@ -2,8 +2,14 @@ import Image from "next/image";
 import { Hero, CustomFilter, SearchBar, CarCard } from "@/components";
 import { fetchCars } from "@/utils";
 
-export default async function Home() {
-  const allCars = await fetchCars();
+export default async function Home({ searchParams }: { searchParams: any }) {
+  const allCars = await fetchCars({
+    manufacturer: searchParams.manufacturer || "",
+    year: searchParams.year ? parseInt(searchParams.year) : 2022,
+    fuel: searchParams.fuel || "",
+    // limit: searchParams.limit ? parseInt(searchParams.limit) : 10,
+    model: searchParams.model || "",
+  });
   
   const isDataEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars;
 
@@ -29,7 +35,7 @@ export default async function Home() {
             <section>
               <div className="home__cars-wrapper">
                 {allCars?.map((car) => (
-                  <CarCard key={car.model} car={car}/>
+                  <CarCard key={`${car.make}-${car.model}-${car.year}`} car={car}/>
                 ))}
               </div>
             </section>
